@@ -1,0 +1,65 @@
+version: 2
+
+models:
+  - name: mart_engine_health
+    description: "Per-engine summary statistics and life category across all 4 datasets"
+    columns:
+      - name: dataset_id
+        description: "Source dataset (FD001–FD004)"
+        tests:
+          - not_null
+      - name: engine_id
+        description: "Engine identifier — unique within a dataset, not globally"
+        tests:
+          - not_null
+      - name: total_cycles
+        description: "Total number of cycles before failure"
+        tests:
+          - not_null
+      - name: life_category
+        description: "Engine life bucket based on total cycles"
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['short_life', 'medium_life', 'long_life']
+
+  - name: mart_ml_features
+    description: "Feature-engineered table for RUL prediction models"
+    columns:
+      - name: dataset_id
+        tests:
+          - not_null
+      - name: engine_id
+        tests:
+          - not_null
+      - name: cycle
+        tests:
+          - not_null
+      - name: rul
+        description: "Remaining useful life in cycles, capped at 125"
+        tests:
+          - not_null
+      - name: cycle_pct
+        description: "Position in engine lifetime (0 = start, 1 = failure)"
+        tests:
+          - not_null
+
+  - name: mart_sensor_drift
+    description: "Early vs late life sensor comparison per engine across all 4 datasets"
+    columns:
+      - name: dataset_id
+        tests:
+          - not_null
+      - name: engine_id
+        tests:
+          - not_null
+      - name: s02_drift
+        tests:
+          - not_null
+      - name: s04_drift
+        tests:
+          - not_null
+      - name: s11_drift
+        tests:
+          - not_null

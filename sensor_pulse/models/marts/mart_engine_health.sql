@@ -5,6 +5,7 @@ with base as (
 )
 
 select
+    dataset_id,
     engine_id,
     max(cycle)               as total_cycles,
     round(avg(sensor_02), 2) as avg_sensor_02,
@@ -18,5 +19,5 @@ select
     end as life_category
 
 from base
-group by engine_id
-order by total_cycles desc
+group by dataset_id, engine_id
+order by dataset_id, total_cycles desc
