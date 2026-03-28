@@ -19,24 +19,9 @@ The pipeline processes NASA CMAPSS turbofan engine sensor data — 21 sensors pe
 
 ## Architecture
 
-```
-Raw CSV (FD001–FD004)
-   │
-   ▼
-Bronze  ──  Raw ingestion, append-only, load_timestamp for lineage
-   │
-   ▼
-Silver  ──  Validation, status flags, max_cycle, cycle_pct, RUL
-   │
-   ├──► Anomaly Detection  ──  Rolling Z-score per engine (anomaly_detection.ipynb)
-   │
-   ▼
-Gold    ──  4 analytics tables + ML feature engineering
-   │
-   ├──► dbt models  ──  Staging + 3 marts with schema tests (DuckDB)
-   │
-   └──► RUL Model  ──  Random Forest baseline (rul_model.ipynb)
-```
+
+![SENSOR-PULSE Pipeline](Screenshots/architecture.png)
+
 
 Each layer is written as **Parquet** — the columnar format used in Microsoft Fabric, Databricks, and other modern data platforms. The `createOrReplaceTempView` + Spark SQL pattern used in Gold runs unchanged in Fabric notebooks.
 
@@ -110,6 +95,8 @@ anomaly  = |z_score| > 2.0
 
 The notebook visualises sensor readings with anomalies highlighted, and measures whether anomaly rate increases near end of life — validating that the detector is picking up real degradation signals rather than noise.
 
+![Anomaly Detection across all datasets](Screenshots/anomaly_all_datasets.png)
+
 ---
 
 ## RUL Prediction
@@ -167,8 +154,9 @@ cd sensor_pulse
 pip install dbt-duckdb
 dbt run
 dbt test
-```
 
+```
+![dbt test output](Screenshots/dbt_test_output.png)
 ---
 
 ## Key Design Decisions
