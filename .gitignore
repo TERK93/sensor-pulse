@@ -1,0 +1,6 @@
+data/
+logs/
+sensor_pulse/dev.duckdb
+sensor_pulse/target/
+sensor_pulse/logs/
+*.duckdb
