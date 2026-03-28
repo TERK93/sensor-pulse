@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: stg_sensor_readings
+    description: "Validated sensor readings with status flags and RUL"
+    columns:
+      - name: engine_id
+        description: "Unique engine identifier"
+        tests:
+          - not_null
+      - name: cycle
+        description: "Engine cycle number"
+        tests:
+          - not_null
+      - name: status
+        description: "Validation status"
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['valid', 'invalid_null', 'invalid_sensor_range']
