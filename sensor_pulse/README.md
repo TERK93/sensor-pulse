@@ -142,6 +142,8 @@ Random Forest baseline trained on Gold-layer features.
 
 FD002 and FD004 achieve lower RMSE despite 6 operating conditions — per-condition normalisation effectively captures sensor variance from varying loads.
 
+---
+
 ## dbt Models
 
 The `sensor_pulse/` directory contains a dbt project on DuckDB with 4 models and schema tests.
@@ -215,3 +217,4 @@ This project focuses on **PySpark, distributed data processing, and ML for indus
 For a SQL-native pipeline using PostgreSQL and pandas, see
 [finance-data-pipeline](https://github.com/TERK93/finance-data-pipeline) —
 same Medallion Architecture, different execution engine and domain.
+'
