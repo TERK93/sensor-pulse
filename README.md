@@ -207,7 +207,7 @@ python ingestion/simulate_sensor_stream.py  # Terminal 2
 ```
 
 Currently streams FD001 — extend by pointing `INPUT_FILE` at any dataset.
----
+
 
 ## Relation to Other Projects
 
