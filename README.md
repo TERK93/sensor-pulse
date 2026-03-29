@@ -14,6 +14,7 @@ The pipeline processes NASA CMAPSS turbofan engine sensor data — 21 sensors pe
 | `anomaly_detection.ipynb` | Rolling Z-score anomaly detection per engine with visualizations |
 | `rul_model.ipynb` | Random Forest baseline for Remaining Useful Life prediction |
 | `sensor_pulse/` | dbt project — 4 models with schema tests on DuckDB |
+| `ingestion/` | Simulated IoT streaming ingestion — emits sensor rows one at a time to JSONL, ingests to Bronze Parquet |
 
 ---
 
@@ -197,6 +198,15 @@ dbt run
 dbt test
 ```
 
+### Streaming ingestion (local simulation)
+
+Demonstrates how real-time sensor data would flow into Bronze in a production IoT environment. Since CMAPSS is a static dataset, the simulator replays rows from FD001 one at a time to emulate a live sensor feed. See `ingestion/README.md` for full documentation.
+```bash
+python ingestion/ingest_to_bronze.py        # Terminal 1
+python ingestion/simulate_sensor_stream.py  # Terminal 2
+```
+
+Currently streams FD001 — extend by pointing `INPUT_FILE` at any dataset.
 ---
 
 ## Relation to Other Projects
